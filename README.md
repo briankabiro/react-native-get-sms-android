@@ -1,10 +1,18 @@
 
 # react-native-get-sms-android
 
+Module that gets all the messages from android
+
 > Decided to start this package because *react-native-android-sms* isn't maintained. It doesn't work with newer React native versions
 ----
 
 ## Getting started
+
+#### Yarn
+
+`$ yarn add react-native-get-sms-android`
+
+#### Npm
 
 `$ npm install react-native-get-sms-android --save`
 
@@ -12,8 +20,31 @@
 
 `$ react-native link react-native-get-sms-android`
 
-#### Android
+#### Manual installation
+*android/settings.gradle*
+    
+    include ':react-native-get-sms-android'
+    project('react-native-get-sms-android').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-get-sms-android/android')
 
+*android/app/build.gradle*
+       
+    dependencies{
+        compile project(':react-native-get-sms-android')
+     }
+
+*MainApplication.java*
+
+    import com.react.SmsPackage;
+    
+    @Override
+    protected List<ReactPackage> getPackages() {
+      return Arrays.<ReactPackage>asList(
+        new MainReactPackage(),
+        new SmsPackage()
+        // (...)
+      );
+    }
+    
 ## Usage
 ```javascript
 import SmsAndroid  from 'react-native-get-sms-android';
