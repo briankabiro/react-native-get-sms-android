@@ -2,17 +2,26 @@
 {
   "name": "react-native-get-sms-android",
   "version": "1.0.0",
-  "description": "",
+  "description": "React-native module that gets sms from android device",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "repository":{
+    "type":"git",
+    "url":"git+https://github.com/briankabiro/react-native-get-sms-android.git"
+  },
   "keywords": [
-    "react-native"
+    "react-native",
+    "android"
   ],
-  "author": "",
-  "license": "",
+  "author": "Brian Kabiro",
+  "license": "MIT",
   "peerDependencies": {
     "react-native": "*"
-  }
+  },
+  "bugs":{
+    "url":"https://github.com/briankabiro/react-native-get-sms-android/issues"
+  },
+  "homepage":"https://github.com/briankabiro/react-native-get-sms-android#readme"
 }
