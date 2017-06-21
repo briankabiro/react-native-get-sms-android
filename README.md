@@ -16,6 +16,16 @@ Module that gets all the messages from android
 
 `$ npm install react-native-get-sms-android --save`
 
+#### Android Permissions
+Add permissions to your `android/app/src/main/AndroidManifest.xml` file.
+
+```xml
+...
+  <uses-permission android:name="android.permission.READ_SMS" />
+...
+```
+
+
 ### Mostly automatic installation
 
 `$ react-native link react-native-get-sms-android`
