@@ -181,6 +181,19 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
       
       
   }
+
+  @ReactMethod
+  public void delete(Integer id, final Callback errorCallback, final Callback successCallback) {
+    mActivity = getCurrentActivity();
+    try {
+      mActivity.getContentResolver().delete(Uri.parse("content://sms/" + id), null, null);
+      successCallback.invoke("OK");
+      return;
+    } catch (Exception e) {
+      errorCallback.invoke(e.getMessage());
+      return;
+    }
+  }
 }
 
 
