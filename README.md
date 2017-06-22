@@ -44,7 +44,19 @@ Module that gets all the messages from android
         // (...)
       );
     }
-    
+
+#### Android Permissions
+Add permissions to your `android/app/src/main/AndroidManifest.xml` file.
+
+```xml
+...
+  <uses-permission android:name="android.permission.READ_SMS" />
+...
+```
+
+
+
+
 ## Usage
 ```javascript
 import SmsAndroid  from 'react-native-get-sms-android';
