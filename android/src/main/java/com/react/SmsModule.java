@@ -42,10 +42,13 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
     private Map<Long, String> smsList;
     private Map<Long, Object> smsListBody;
     Activity mActivity = null;
+    private static Context context;
+
     public SmsModule(ReactApplicationContext reactContext)
     {
         super(reactContext);
         smsList = new HashMap<Long, String>();
+        context = reactContext.getApplicationContext();
     }
 
     @Override
@@ -56,7 +59,6 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
 
     @ReactMethod
     public void list(String filter, final Callback errorCallback, final Callback successCallback) {
-        mActivity = getCurrentActivity();
         try{
             JSONObject filterJ = new JSONObject(filter);
             String uri_filter = filterJ.has("box") ? filterJ.optString("box") : "inbox";
@@ -66,7 +68,7 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             String fcontent = filterJ.optString("body");
             int indexFrom = filterJ.has("indexFrom") ? filterJ.optInt("indexFrom") : 0;
             int maxCount = filterJ.has("maxCount") ? filterJ.optInt("maxCount") : -1;
-            Cursor cursor = mActivity.getContentResolver().query(Uri.parse("content://sms/"+uri_filter), null, "", null, null);
+            Cursor cursor = context.getContentResolver().query(Uri.parse("content://sms/"+uri_filter), null, "", null, null);
             int c = 0;
             JSONArray jsons = new JSONArray();
             while (cursor.moveToNext()) {
@@ -182,21 +184,15 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
       
   }
 
-  @ReactMethod
-  public void delete(Integer id, final Callback errorCallback, final Callback successCallback) {
-    mActivity = getCurrentActivity();
-    try {
-      mActivity.getContentResolver().delete(Uri.parse("content://sms/" + id), null, null);
-      successCallback.invoke("OK");
-      return;
-    } catch (Exception e) {
-      errorCallback.invoke(e.getMessage());
-      return;
-    }
+   @ReactMethod
+   public void delete(Integer id, final Callback errorCallback, final Callback successCallback) {
+      try {
+        context.getContentResolver().delete(Uri.parse("content://sms/" + id), null, null);
+        successCallback.invoke("OK");
+        return;
+      } catch (Exception e) {
+        errorCallback.invoke(e.getMessage());
+        return;
+      }
   }
 }
-
-
-
-
-
