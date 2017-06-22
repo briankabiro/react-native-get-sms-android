@@ -138,10 +138,10 @@ Delete an sms with id. If the message with the specified id does not exist it wi
 ```javascript
 import SmsAndroid  from 'react-native-get-sms-android';
 
-SmsAndroid.delete(_id, (success) => {
-    console.log("SMS deleted successfully");
-}, (fail) => {
+SmsAndroid.delete(_id, (fail) => {
     console.log("Failed with this error: " + fail)
+}, (success) => {
+    console.log("SMS deleted successfully");
 });
 ```
 
