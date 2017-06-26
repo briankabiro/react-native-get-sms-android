@@ -126,6 +126,6 @@ Each sms will be represents by a JSON object represented below
 }
 
 */
-
-## thanks
-* react-native-android-sms
+```
+## Thanks
+   *react-native-android-sms
