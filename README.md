@@ -51,6 +51,7 @@ Add permissions to your `android/app/src/main/AndroidManifest.xml` file.
 ```xml
 ...
   <uses-permission android:name="android.permission.READ_SMS" />
+  <uses-permission android:name="android.permission.WRITE_SMS" />
 ...
 ```
 
@@ -81,9 +82,8 @@ SmsAndroid.list(JSON.stringify(filter), (fail) => {
         console.log('List: ', smsList);
         var arr = JSON.parse(smsList);
 
-        arr.forEach(function(index){
-          var obj = arr[index];
-            console.log("Index: " + index);
+        arr.forEach(function(object){
+            console.log("Object: " + obj);
             console.log("-->" + obj.date);
             console.log("-->" + obj.body);
         })
