@@ -59,8 +59,12 @@ Add permissions to your `android/app/src/main/AndroidManifest.xml` file.
 
 
 ## Usage
+
+### List SMS Messages
+
 ```javascript
 import SmsAndroid  from 'react-native-get-sms-android';
+
 /* List SMS messages matching the filter */
 var filter = {
     box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
@@ -127,5 +131,19 @@ Each sms will be represents by a JSON object represented below
 
 */
 ```
-## Thanks
-   *react-native-android-sms
+
+### Delete SMS Message
+Delete an sms with id. If the message with the specified id does not exist it will fail with error: `SMS not found`
+
+```javascript
+import SmsAndroid  from 'react-native-get-sms-android';
+
+SmsAndroid.delete(_id, (fail) => {
+    console.log("Failed with this error: " + fail)
+}, (success) => {
+    console.log("SMS deleted successfully");
+});
+```
+
+## thanks
+* react-native-android-sms
