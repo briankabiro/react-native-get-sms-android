@@ -86,9 +86,8 @@ SmsAndroid.list(JSON.stringify(filter), (fail) => {
         console.log('List: ', smsList);
         var arr = JSON.parse(smsList);
 
-        arr.forEach(function(index){
-          var obj = arr[index];
-            console.log("Index: " + index);
+        arr.forEach(function(object){
+            console.log("Object: " + obj);
             console.log("-->" + obj.date);
             console.log("-->" + obj.body);
         })
@@ -132,6 +131,7 @@ Each sms will be represents by a JSON object represented below
 
 */
 ```
+
 ### Delete SMS Message
 Delete an sms with id. If the message with the specified id does not exist it will fail with error: `SMS not found`
 
