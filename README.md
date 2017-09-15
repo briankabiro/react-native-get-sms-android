@@ -52,6 +52,7 @@ Add permissions to your `android/app/src/main/AndroidManifest.xml` file.
 ...
   <uses-permission android:name="android.permission.READ_SMS" />
   <uses-permission android:name="android.permission.WRITE_SMS" />
+  <uses-permission android:name="android.permission.SEND_SMS" />
 ...
 ```
 
@@ -145,5 +146,27 @@ SmsAndroid.delete(_id, (fail) => {
 });
 ```
 
+### Send SMS Message (automatically)
+Send an sms directy with react without user interaction.
+
+```javascript
+import SmsAndroid  from 'react-native-get-sms-android';
+
+SmsAndroid.autoSend(phoneNumber, message, (fail) => {
+    console.log("Failed with this error: " + fail)
+}, (success) => {
+    console.log("SMS sent successfully");
+});
+```
+
+#### Event listeners
+An event will be thrown when the sms has been delivered. If the sms was delivered successfully the message will be "SMS delivered" otherwise the message will be  "SMS not delivered"
+```js
+    import { DeviceEventEmitter } from 'react-native';
+
+     DeviceEventEmitter.addListener('sms_onDelivery', (msg) => {
+      console.log(msg); 
+    });
+```
 ## thanks
 * react-native-android-sms
