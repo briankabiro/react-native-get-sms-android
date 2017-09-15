@@ -52,6 +52,7 @@ Add permissions to your `android/app/src/main/AndroidManifest.xml` file.
 ...
   <uses-permission android:name="android.permission.READ_SMS" />
   <uses-permission android:name="android.permission.WRITE_SMS" />
+  <uses-permission android:name="android.permission.SEND_SMS" />
 ...
 ```
 
