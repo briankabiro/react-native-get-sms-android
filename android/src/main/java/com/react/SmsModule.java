@@ -72,7 +72,7 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             String fcontent = filterJ.optString("body");
             int indexFrom = filterJ.has("indexFrom") ? filterJ.optInt("indexFrom") : 0;
             int maxCount = filterJ.has("maxCount") ? filterJ.optInt("maxCount") : -1;
-            String selection = filterJ.has("selection") ? filterJ.optInt("selection") : "";
+            String selection = filterJ.has("selection") ? filterJ.optString("selection") : "";
             Cursor cursor = context.getContentResolver().query(Uri.parse("content://sms/" + uri_filter), null, selection, null,
                     null);
             int c = 0;
