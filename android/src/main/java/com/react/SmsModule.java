@@ -93,7 +93,6 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
                     if (c >= indexFrom) {
                         if (maxCount > 0 && c >= indexFrom + maxCount)
                             break;
-                        c++;
                         // Long dateTime = Long.parseLong(cursor.getString(cursor.getColumnIndex("date")));
                         // String message = cursor.getString(cursor.getColumnIndex("body"));
                         JSONObject json;
@@ -102,6 +101,7 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
 
                     }
                 }
+								c++;
 
             }
             cursor.close();
