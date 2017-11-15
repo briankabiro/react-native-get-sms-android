@@ -74,8 +74,8 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             int maxCount = filterJ.has("maxCount") ? filterJ.optInt("maxCount") : -1;
             String selection = filterJ.has("selection") ? filterJ.optString("selection") : "";
             String sortOrder = filterJ.has("sortOrder") ? filterJ.optString("sortOrder") : null;
-            Cursor cursor = context.getContentResolver().query(Uri.parse("content://sms/" + uri_filter), null, selection, sortOrder,
-                    null);
+            Cursor cursor = context.getContentResolver().query(Uri.parse("content://sms/" + uri_filter), null, selection, null,
+                   	sortOrder);
             int c = 0;
             JSONArray jsons = new JSONArray();
             while (cursor.moveToNext()) {
