@@ -88,9 +88,9 @@ SmsAndroid.list(JSON.stringify(filter), (fail) => {
         var arr = JSON.parse(smsList);
 
         arr.forEach(function(object){
-            console.log("Object: " + obj);
-            console.log("-->" + obj.date);
-            console.log("-->" + obj.body);
+            console.log("Object: " + object);
+            console.log("-->" + object.date);
+            console.log("-->" + object.body);
         })
     });
 
