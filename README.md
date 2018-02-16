@@ -147,7 +147,7 @@ SmsAndroid.delete(_id, (fail) => {
 ```
 
 ### Send SMS Message (automatically)
-Send an sms directy with react without user interaction.
+Send an sms directly with React without user interaction.
 
 ```javascript
 import SmsAndroid  from 'react-native-get-sms-android';
