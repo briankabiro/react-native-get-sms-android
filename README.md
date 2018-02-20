@@ -168,5 +168,8 @@ An event will be thrown when the sms has been delivered. If the sms was delivere
       console.log(msg); 
     });
 ```
-## thanks
+## Note
+* Does not with Expo as it does not support sending messages at the moment
+
+## Thanks
 * react-native-android-sms
