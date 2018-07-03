@@ -3,7 +3,7 @@
 
 Module that gets all the messages from android
 
-> Decided to start this package because *react-native-android-sms* isn't maintained. It doesn't work with newer React native versions
+> Decided to start this package because [*react-native-android-sms*](https://github.com/msmakhlouf/react-native-android-sms) wasn't maintained at the time.
 ----
 
 ## Getting started
@@ -169,7 +169,7 @@ An event will be thrown when the sms has been delivered. If the sms was delivere
     });
 ```
 ## Note
-* Does not with Expo as it's not possible to include custom native modules beyond the React Native APIs and components that are available in the Expo client app.
+* Does not with Expo as it's not possible to include custom native modules beyond the React Native APIs and components that are available in the Expo client app. The information [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md#ejecting-from-create-react-native-app) might help with integrating the module while still using Expo.
 
 ## Thanks
-* react-native-android-sms
+* [react-native-android-sms](https://github.com/msmakhlouf/react-native-android-sms)
