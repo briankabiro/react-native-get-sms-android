@@ -169,7 +169,7 @@ An event will be thrown when the sms has been delivered. If the sms was delivere
     });
 ```
 ## Note
-* Does not with Expo as it does not support sending messages at the moment
+* Does not with Expo as it's not possible to include custom native modules beyond the React Native APIs and components that are available in the Expo client app.
 
 ## Thanks
 * react-native-android-sms
