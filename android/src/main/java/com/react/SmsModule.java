@@ -33,6 +33,7 @@ import android.telephony.SmsMessage;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.ArrayList;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -224,6 +225,8 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
         try {
             String SENT = "SMS_SENT";
             String DELIVERED = "SMS_DELIVERED";
+            ArrayList<PendingIntent> sentPendingIntents = new ArrayList<PendingIntent>();
+            ArrayList<PendingIntent> deliveredPendingIntents = new ArrayList<PendingIntent>();
 
             PendingIntent sentPI = PendingIntent.getBroadcast(context, 0, new Intent(SENT), 0);
             PendingIntent deliveredPI = PendingIntent.getBroadcast(context, 0, new Intent(DELIVERED), 0);
@@ -268,7 +271,13 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             }, new IntentFilter(DELIVERED));
 
             SmsManager sms = SmsManager.getDefault();
-            sms.sendTextMessage(phoneNumber, null, message, sentPI, deliveredPI);
+            ArrayList<String> parts = sms.divideMessage(message);
+
+            for (int i = 0; i < parts.size(); i++) {
+                sentPendingIntents.add(i, sentPI);
+                deliveredPendingIntents.add(i, deliveredPI);
+            }
+            sms.sendMultipartTextMessage(phoneNumber, null, parts, sentPendingIntents, deliveredPendingIntents);
 
         } catch (Exception e) {
             sendCallback(e.getMessage(), false);
