@@ -1,6 +1,6 @@
 {
   "name": "react-native-get-sms-android",
-  "version": "1.3.4",
+  "version": "1.3.5",
   "description": "React-native module that gets sms from android device",
   "main": "index.js",
   "scripts": {
