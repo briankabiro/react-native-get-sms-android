@@ -73,8 +73,10 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             String fcontent = filterJ.optString("body");
             int indexFrom = filterJ.has("indexFrom") ? filterJ.optInt("indexFrom") : 0;
             int maxCount = filterJ.has("maxCount") ? filterJ.optInt("maxCount") : -1;
-            Cursor cursor = context.getContentResolver().query(Uri.parse("content://sms/" + uri_filter), null, "", null,
-                    null);
+            String selection = filterJ.has("selection") ? filterJ.optString("selection") : "";
+            String sortOrder = filterJ.has("sortOrder") ? filterJ.optString("sortOrder") : null;
+            Cursor cursor = context.getContentResolver().query(Uri.parse("content://sms/" + uri_filter), null, selection, null,
+                   	sortOrder);
             int c = 0;
             JSONArray jsons = new JSONArray();
 
@@ -104,6 +106,7 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
                     }
                     c++;
                 }
+                c++;
 
             }
             cursor.close();
