@@ -80,7 +80,7 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             int c = 0;
             JSONArray jsons = new JSONArray();
 
-            while (cursor.moveToNext() != null && cursor.moveToNext()) {
+            while (cursor != null && cursor.moveToNext()) {
                 boolean matchFilter = false;
                 if (fid > -1)
                     matchFilter = fid == cursor.getInt(cursor.getColumnIndex("_id"));
