@@ -16,7 +16,8 @@ import {
   View,
   ScrollView,
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  PermissionsAndroid
 } from "react-native";
 import SmsAndroid from "react-native-get-sms-android";
 
@@ -36,9 +37,67 @@ export default class App extends Component<Props> {
       sendBody: "",
       smsList: []
     };
+  }
 
+  async componentDidMount() {
     if (Platform.OS === "android") {
-      this.listSMS();
+      try {
+        if (!(await this.checkPermissions())) {
+          await this.requestPermissions();
+        }
+
+        if (await this.checkPermissions()) {
+          this.listSMS();
+        }
+      } catch (e) {
+        console.error(e);
+      }
+    }
+  }
+
+  async checkPermissions() {
+    console.log("checking SMS permissions");
+    let hasPermissions = false;
+    try {
+      hasPermissions = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.READ_SMS
+      );
+      if (!hasPermissions) return false;
+      hasPermissions = await PermissionsAndroid.check(
+        PermissionsAndroid.PERMISSIONS.SEND_SMS
+      );
+      if (!hasPermissions) return false;
+    } catch (e) {
+      console.error(e);
+    }
+    return hasPermissions;
+  }
+
+  async requestPermissions() {
+    let granted = {};
+    try {
+      console.log("requesting SMS permissions");
+      granted = await PermissionsAndroid.requestMultiple(
+        [
+          PermissionsAndroid.PERMISSIONS.READ_SMS,
+          PermissionsAndroid.PERMISSIONS.SEND_SMS
+        ],
+        {
+          title: "Example App SMS Features",
+          message: "Example SMS App needs access to demonstrate SMS features",
+          buttonNeutral: "Ask Me Later",
+          buttonNegative: "Cancel",
+          buttonPositive: "OK"
+        }
+      );
+      console.log(granted);
+      if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+        console.log("You can use SMS features");
+      } else {
+        console.log("SMS permission denied");
+      }
+    } catch (err) {
+      console.warn(err);
     }
   }
 
@@ -61,21 +120,6 @@ export default class App extends Component<Props> {
     );
   }
 
-  deleteSMS(id) {
-    console.log(id);
-    SmsAndroid.delete(
-      id,
-      err => {
-        Alert.alert("Failed to deleted SMS. Check console");
-        console.log("SMS DELETE ERROR", err);
-      },
-      success => {
-        Alert.alert("SMS deleted successfully");
-        this.listSMS();
-      }
-    );
-  }
-
   showSMS() {
     return this.state.smsList.map(sms => {
       return (
@@ -83,17 +127,6 @@ export default class App extends Component<Props> {
           <Text>From: {sms.address}</Text>
           <Text>Body: {sms.body}</Text>
           <Text>Id: {sms._id}</Text>
-          <TouchableOpacity
-            onPress={() => this.deleteSMS(sms._id)}
-            style={{
-              width: 90,
-              margin: 5,
-              borderColor: "#bbb",
-              borderWidth: 1
-            }}
-          >
-            <Text>DELETE SMS</Text>
-          </TouchableOpacity>
         </View>
       );
     });
