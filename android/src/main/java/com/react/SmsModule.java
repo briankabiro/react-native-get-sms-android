@@ -106,8 +106,6 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
                     }
                     c++;
                 }
-                c++;
-
             }
             cursor.close();
             try {
