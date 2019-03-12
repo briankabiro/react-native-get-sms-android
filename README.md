@@ -173,8 +173,13 @@ import { DeviceEventEmitter } from 'react-native';
   console.log(msg); 
 });
 ```
+
 ## Note
 * Does not with Expo as it's not possible to include custom native modules beyond the React Native APIs and components that are available in the Expo client app. The information [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md#ejecting-from-create-react-native-app) might help with integrating the module while still using Expo.
+
+
+## Contributions welcome!
+Feel free to open an issue or a Pull Request.
 
 ## Thanks
 * [react-native-android-sms](https://github.com/msmakhlouf/react-native-android-sms)
