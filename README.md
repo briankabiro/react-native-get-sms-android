@@ -27,12 +27,12 @@ The package allows you to:
 
 #### Manual installation
 *android/settings.gradle*
-    
+
     include ':react-native-get-sms-android'
     project('react-native-get-sms-android').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-get-sms-android/android')
 
 *android/app/build.gradle*
-       
+
     dependencies{
         compile project(':react-native-get-sms-android')
      }
@@ -40,7 +40,7 @@ The package allows you to:
 *MainApplication.java*
 
     import com.react.SmsPackage;
-    
+
     @Override
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
@@ -99,7 +99,7 @@ SmsAndroid.list(JSON.stringify(filter), (fail) => {
         })
     });
 
-/* 
+/*
 Each sms will be represents by a JSON object represented below
 
 {
@@ -170,7 +170,7 @@ An event will be thrown when the sms has been delivered. If the sms was delivere
 import { DeviceEventEmitter } from 'react-native';
 
  DeviceEventEmitter.addListener('sms_onDelivery', (msg) => {
-  console.log(msg); 
+  console.log(msg);
 });
 ```
 
