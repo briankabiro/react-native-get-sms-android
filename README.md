@@ -29,7 +29,7 @@ The package allows you to:
 *android/settings.gradle*
     
     include ':react-native-get-sms-android'
-    project('react-native-get-sms-android').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-get-sms-android/android')
+    project(':react-native-get-sms-android').projectDir = new File(rootProject.projectDir, '../node_modules/react-native-get-sms-android/android')
 
 *android/app/build.gradle*
        
