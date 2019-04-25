@@ -127,19 +127,19 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
         try {
             for (int j = 0; j < nCol; j++)
                 switch (cur.getType(j)) {
-                    case 0:
+                    case Cursor.FIELD_TYPE_NULL:
                         json.put(keys[j], null);
                         break;
-                    case 1:
+                    case Cursor.FIELD_TYPE_INTEGER:
                         json.put(keys[j], cur.getLong(j));
                         break;
-                    case 2:
+                    case Cursor.FIELD_TYPE_FLOAT:
                         json.put(keys[j], cur.getFloat(j));
                         break;
-                    case 3:
+                    case Cursor.FIELD_TYPE_STRING:
                         json.put(keys[j], cur.getString(j));
                         break;
-                    case 4:
+                    case Cursor.FIELD_TYPE_BLOB:
                         json.put(keys[j], cur.getBlob(j));
                 }
         } catch (Exception e) {
