@@ -75,6 +75,8 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             int maxCount = filterJ.has("maxCount") ? filterJ.optInt("maxCount") : -1;
             String selection = filterJ.has("selection") ? filterJ.optString("selection") : "";
             String sortOrder = filterJ.has("sortOrder") ? filterJ.optString("sortOrder") : null;
+            long maxDate = filterJ.has("maxDate") ? filterJ.optLong("maxDate") : -1;
+            long minDate = filterJ.has("minDate") ? filterJ.optLong("minDate") : -1;
             Cursor cursor = context.getContentResolver().query(Uri.parse("content://sms/" + uri_filter), null, selection, null,
                    	sortOrder);
             int c = 0;
@@ -93,6 +95,10 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
                 else {
                     matchFilter = true;
                 }
+                if (maxDate > -1)
+                    matchFilter = matchFilter && maxDate >= cursor.getLong(cursor.getColumnIndex("date"));
+                if (minDate > -1)
+                    matchFilter = matchFilter && minDate <= cursor.getLong(cursor.getColumnIndex("date"));
                 if (matchFilter) {
                     if (c >= indexFrom) {
                         if (maxCount > 0 && c >= indexFrom + maxCount)
@@ -127,19 +133,19 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
         try {
             for (int j = 0; j < nCol; j++)
                 switch (cur.getType(j)) {
-                    case 0:
+                    case Cursor.FIELD_TYPE_NULL:
                         json.put(keys[j], null);
                         break;
-                    case 1:
+                    case Cursor.FIELD_TYPE_INTEGER:
                         json.put(keys[j], cur.getLong(j));
                         break;
-                    case 2:
+                    case Cursor.FIELD_TYPE_FLOAT:
                         json.put(keys[j], cur.getFloat(j));
                         break;
-                    case 3:
+                    case Cursor.FIELD_TYPE_STRING:
                         json.put(keys[j], cur.getString(j));
                         break;
-                    case 4:
+                    case Cursor.FIELD_TYPE_BLOB:
                         json.put(keys[j], cur.getBlob(j));
                 }
         } catch (Exception e) {

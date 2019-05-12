@@ -11,6 +11,8 @@ import React, { Component } from "react";
 import {
   Alert,
   Platform,
+  Button,
+  Clipboard,
   StyleSheet,
   Text,
   View,
@@ -35,6 +37,8 @@ export default class App extends Component<Props> {
     this.state = {
       sendTo: "",
       sendBody: "",
+      minDate: "",
+      maxDate: "",
       smsList: []
     };
   }
@@ -101,11 +105,55 @@ export default class App extends Component<Props> {
     }
   }
 
-  listSMS() {
+
+    sendSMS = () => {
+      SmsAndroid.autoSend(
+        this.state.sendTo,
+        this.state.sendBody,
+        err => {
+          Alert.alert("Failed to send SMS. Check console");
+          console.log("SMS SEND ERROR", err);
+        },
+        success => {
+          Alert.alert("SMS sent successfully");
+        }
+      );
+    }
+
+    renderSendSMS = () => {
+      return (
+        <View style={{ flex: 1, alignItems: 'flex-start'}}>
+          <Text style={styles.welcome}>Send SMS</Text>
+          <Text>To</Text>
+          <TextInput
+            style={{ width: '100%', borderRadius: 20, height: 40, borderColor: "gray", borderWidth: 1 }}
+            onChangeText={text => this.setState({ sendTo: text })}
+            value={this.state.sendTo}
+            keyboardType={"numeric"}
+          />
+          <Text>Message</Text>
+          <TextInput
+            style={{ borderRadius: 20, height: 40, borderColor: "gray", borderWidth: 1 }}
+            onChangeText={text => this.setState({ sendBody: text })}
+            value={this.state.sendBody}
+          />
+          <Button title="send sms" onPress={() => this.sendSMS()} />
+        </View>
+      )
+    }
+
+  listSMS = () => {
+    const {minDate, maxDate} = this.state
     var filter = {
       box: "inbox",
-      maxCount: 10
+      maxCount: 30,
     };
+    if (minDate !== "") {
+      filter.minDate = minDate
+    }
+    if (maxDate !== "") {
+      filter.maxDate = maxDate
+    }
 
     SmsAndroid.list(
       JSON.stringify(filter),
@@ -120,30 +168,79 @@ export default class App extends Component<Props> {
     );
   }
 
-  showSMS() {
+  pasteDateFilter = str => {
+    switch(str) {
+      case 'minDate':
+      case 'maxDate':
+        return async () => {
+          const content = await Clipboard.getString()
+          this.setState({[str]: content})
+        }
+        break;
+      default:
+    }
+  }
+
+  renderDateFilter = str => {
+    switch(str) {
+      case 'minDate':
+      case 'maxDate':
+        return (
+          <View>
+            <Text>{str} (UNIX timestamp in ms)</Text>
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={{ flex: 1, borderRadius: 20, height: 40, borderColor: "gray", borderWidth: 1 }}
+                onChangeText={text => this.setState({[str]: text })}
+                value={this.state[str]}
+                keyboardType={"numeric"}
+              />
+              <Button title='paste' onPress={this.pasteDateFilter(str)}/>
+            </View>
+          </View>
+        )
+        break;
+      default:
+    }
+  }
+
+  renderFilters = () => {
+    return (
+      <View>
+        {this.renderDateFilter('minDate')}
+        {this.renderDateFilter('maxDate')}
+      </View>
+    )
+  }
+
+  renderShowSMS() {
     return this.state.smsList.map(sms => {
       return (
         <View style={{ borderColor: "#bbb", borderWidth: 1 }} key={sms._id}>
           <Text>From: {sms.address}</Text>
           <Text>Body: {sms.body}</Text>
           <Text>Id: {sms._id}</Text>
+          <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <Text>Date timestamp: {sms.date}</Text>
+            <Button title="copy date" onPress={() => Clipboard.setString(sms.date.toString())}/>
+          </View>
+          <Text>Date (readable): {(new Date(sms.date).toString())}</Text>
         </View>
       );
     });
   }
 
-  sendSMS() {
-    SmsAndroid.autoSend(
-      this.state.sendTo,
-      this.state.sendBody,
-      err => {
-        Alert.alert("Failed to send SMS. Check console");
-        console.log("SMS SEND ERROR", err);
-      },
-      success => {
-        Alert.alert("SMS sent successfully");
-      }
-    );
+  renderLatestMessages = () => {
+    return (
+      <View style={{ flex: 2, alignItems: 'flex-start'}}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={styles.welcome}>Latest Messages</Text>
+          <Button title='refresh list' onPress={this.listSMS}/>
+        </View>
+        {this.renderFilters()}
+        <ScrollView>{this.renderShowSMS()}</ScrollView>
+      </View>
+    )
   }
 
   render() {
@@ -160,36 +257,8 @@ export default class App extends Component<Props> {
 
     return (
       <View style={styles.container}>
-        <View style={{ flex: 5 }}>
-          <Text style={styles.welcome}>Latest Messages</Text>
-          <ScrollView>{this.showSMS()}</ScrollView>
-        </View>
-
-        <View style={{ flex: 5 }}>
-          <Text style={styles.welcome}>Send SMS</Text>
-
-          <Text>To</Text>
-          <TextInput
-            style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-            onChangeText={text => this.setState({ sendTo: text })}
-            value={this.state.sendTo}
-            keyboardType={"numeric"}
-          />
-
-          <Text>Message</Text>
-          <TextInput
-            style={{ height: 40, borderColor: "gray", borderWidth: 1 }}
-            onChangeText={text => this.setState({ sendBody: text })}
-            value={this.state.sendBody}
-          />
-
-          <TouchableOpacity
-            onPress={() => this.sendSMS()}
-            style={{ marginTop: 10, borderColor: "#bbb", borderWidth: 1 }}
-          >
-            <Text style={{ textAlign: "center" }}>SEND SMS</Text>
-          </TouchableOpacity>
-        </View>
+        {this.renderSendSMS()}
+        {this.renderLatestMessages()}
       </View>
     );
   }
@@ -197,15 +266,16 @@ export default class App extends Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
+    margin: 20,
     flex: 1,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "flex-start",
     backgroundColor: "#F5FCFF"
   },
   welcome: {
+    color: 'black',
     fontSize: 20,
     textAlign: "center",
-    margin: 10
   },
   instructions: {
     textAlign: "center",
