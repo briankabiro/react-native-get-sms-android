@@ -69,6 +69,7 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             String uri_filter = filterJ.has("box") ? filterJ.optString("box") : "inbox";
             int fread = filterJ.has("read") ? filterJ.optInt("read") : -1;
             int fid = filterJ.has("_id") ? filterJ.optInt("_id") : -1;
+            int ftid = filterJ.has("thread_id") ? filterJ.optInt("thread_id") : -1;
             String faddress = filterJ.optString("address");
             String fcontent = filterJ.optString("body");
             int indexFrom = filterJ.has("indexFrom") ? filterJ.optInt("indexFrom") : 0;
@@ -86,6 +87,8 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
                 boolean matchFilter = false;
                 if (fid > -1)
                     matchFilter = fid == cursor.getInt(cursor.getColumnIndex("_id"));
+                else if (ftid > -1)
+                    matchFilter = ftid == cursor.getInt(cursor.getColumnIndex("thread_id"));
                 else if (fread > -1)
                     matchFilter = fread == cursor.getInt(cursor.getColumnIndex("read"));
                 else if ( faddress != null && !faddress.isEmpty() )
