@@ -88,9 +88,9 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
                     matchFilter = fid == cursor.getInt(cursor.getColumnIndex("_id"));
                 else if (fread > -1)
                     matchFilter = fread == cursor.getInt(cursor.getColumnIndex("read"));
-                else if (faddress.length() > 0)
+                else if ( faddress != null && !faddress.isEmpty() )
                     matchFilter = faddress.equals(cursor.getString(cursor.getColumnIndex("address")).trim());
-                else if (fcontent.length() > 0)
+                else if ( fcontent != null && !fcontent.isEmpty() )
                     matchFilter = fcontent.equals(cursor.getString(cursor.getColumnIndex("body")).trim());
                 else {
                     matchFilter = true;
