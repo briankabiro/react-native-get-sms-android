@@ -87,6 +87,7 @@ var filter = {
     /** the next 4 filters should NOT be used together, they are OR-ed so pick one **/
     read: 0, // 0 for unread SMS, 1 for SMS already read
     _id: 1234, // specify the msg id
+    thread_id: 12 // specify the conversation thread_id
     address: '+1888------', // sender's phone number
     body: 'How are you', // content to match
 
