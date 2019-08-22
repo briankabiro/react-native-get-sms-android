@@ -70,7 +70,7 @@ Add permissions to your `android/app/src/main/AndroidManifest.xml` file.
 
 You need to add permissions manually. `react-native-get-sms-android` does not automatically require permissions from 2.x. Refer to [this](https://github.com/briankabiro/react-native-get-sms-android/issues/34) issue.
 
-You need to require permissions based on what functions you plan to use:
+You need to require permissions in your `AndroidManifest.xml` file's `application` element based on what functions you plan to use like [the official documentation](https://developer.android.com/guide/topics/permissions/overview) describes:
 
 | Function            | Permission needed            |
 | ------------------- | ---------------------------- |
