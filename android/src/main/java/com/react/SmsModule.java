@@ -12,6 +12,7 @@ import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 
+import android.content.ContentValues;
 import android.os.Bundle;
 import android.widget.Toast;
 import android.app.LoaderManager;
@@ -289,6 +290,11 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
                 deliveredPendingIntents.add(i, deliveredPI);
             }
             sms.sendMultipartTextMessage(phoneNumber, null, parts, sentPendingIntents, deliveredPendingIntents);
+
+            ContentValues values = new ContentValues();
+            values.put("address", phoneNumber);
+            values.put("body", message);
+            context.getContentResolver().insert(Uri.parse("content://sms/sent"), values);
 
         } catch (Exception e) {
             sendCallback(e.getMessage(), false);
