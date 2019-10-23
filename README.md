@@ -54,7 +54,7 @@ _MainApplication.java_
 
 #### Android Permissions
 
-**Note**: This has changed from 2.x. See `Upgrading to 2.x` section if using >=2.x
+**Note**: This has changed from 2.x. See `Upgrading to 2.x` section if using <=2.x
 
 Add permissions to your `android/app/src/main/AndroidManifest.xml` file.
 
@@ -206,7 +206,7 @@ DeviceEventEmitter.addListener('sms_onDelivery', (msg) => {
 
 ## Note
 
-- Does not with Expo as it's not possible to include custom native modules beyond the React Native APIs and components that are available in the Expo client app. The information [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md#ejecting-from-create-react-native-app) might help with integrating the module while still using Expo.
+- Does not work with Expo as it's not possible to include custom native modules beyond the React Native APIs and components that are available in the Expo client app. The information [here](https://github.com/react-community/create-react-native-app/blob/master/react-native-scripts/template/README.md#ejecting-from-create-react-native-app) might help with integrating the module while still using Expo.
 
 ## Contributions welcome!
 
