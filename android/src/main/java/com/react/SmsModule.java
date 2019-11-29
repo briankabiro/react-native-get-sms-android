@@ -98,7 +98,7 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
                 else if (fcontent != null && !fcontent.isEmpty())
                     matchFilter = fcontent.equals(cursor.getString(cursor.getColumnIndex("body")).trim());
 
-                if (fContentRegex != null)
+                if (fContentRegex != null && !fContentRegex.isEmpty())
                     matchFilter = matchFilter && cursor.getString(cursor.getColumnIndex("body")).matches(fContentRegex);
                 if (maxDate > -1)
                     matchFilter = matchFilter && maxDate >= cursor.getLong(cursor.getColumnIndex("date"));
