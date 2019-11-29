@@ -90,7 +90,9 @@ var filter = {
   box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
 
   /**
-   *  the next 2 filters work like this:
+   *  the next 3 filters can work together, they are AND-ed
+   *  
+   *  minDate, maxDate filters work like this:
    *    - If and only if you set a maxDate, it's like executing this SQL query:
    *    "SELECT * from messages WHERE (other filters) AND date <= maxDate"
    *    - Same for minDate but with "date >= minDate"
