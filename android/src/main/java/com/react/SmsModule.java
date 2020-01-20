@@ -73,6 +73,7 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             int ftid = filterJ.has("thread_id") ? filterJ.optInt("thread_id") : -1;
             String faddress = filterJ.optString("address");
             String fcontent = filterJ.optString("body");
+            String fContentRegex = filterJ.optString("bodyRegex");
             int indexFrom = filterJ.has("indexFrom") ? filterJ.optInt("indexFrom") : 0;
             int maxCount = filterJ.has("maxCount") ? filterJ.optInt("maxCount") : -1;
             String selection = filterJ.has("selection") ? filterJ.optString("selection") : "";
@@ -80,25 +81,25 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             long maxDate = filterJ.has("maxDate") ? filterJ.optLong("maxDate") : -1;
             long minDate = filterJ.has("minDate") ? filterJ.optLong("minDate") : -1;
             Cursor cursor = context.getContentResolver().query(Uri.parse("content://sms/" + uri_filter), null, selection, null,
-                   	sortOrder);
+                    sortOrder);
             int c = 0;
             JSONArray jsons = new JSONArray();
 
             while (cursor != null && cursor.moveToNext()) {
-                boolean matchFilter = false;
+                boolean matchFilter = true;
                 if (fid > -1)
                     matchFilter = fid == cursor.getInt(cursor.getColumnIndex("_id"));
                 else if (ftid > -1)
                     matchFilter = ftid == cursor.getInt(cursor.getColumnIndex("thread_id"));
                 else if (fread > -1)
                     matchFilter = fread == cursor.getInt(cursor.getColumnIndex("read"));
-                else if ( faddress != null && !faddress.isEmpty() )
+                else if (faddress != null && !faddress.isEmpty())
                     matchFilter = faddress.equals(cursor.getString(cursor.getColumnIndex("address")).trim());
-                else if ( fcontent != null && !fcontent.isEmpty() )
+                else if (fcontent != null && !fcontent.isEmpty())
                     matchFilter = fcontent.equals(cursor.getString(cursor.getColumnIndex("body")).trim());
-                else {
-                    matchFilter = true;
-                }
+
+                if (fContentRegex != null && !fContentRegex.isEmpty())
+                    matchFilter = matchFilter && cursor.getString(cursor.getColumnIndex("body")).matches(fContentRegex);
                 if (maxDate > -1)
                     matchFilter = matchFilter && maxDate >= cursor.getLong(cursor.getColumnIndex("date"));
                 if (minDate > -1)
