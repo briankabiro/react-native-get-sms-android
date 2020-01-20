@@ -2704,8 +2704,8 @@ jest@24.1.0:
   resolved "https://registry.yarnpkg.com/js-tokens/-/js-tokens-4.0.0.tgz#19203fb59991df98e3a287050d4647cdeaf32499"
 
 js-yaml@^3.12.0, js-yaml@^3.9.0:
-  version "3.12.2"
-  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.12.2.tgz#ef1d067c5a9d9cb65bd72f285b5d8105c77f14fc"
+  version "3.13.1"
+  resolved "https://registry.yarnpkg.com/js-yaml/-/js-yaml-3.13.1.tgz#aff151b30bfdfa8e49e05da22e7415e9dfa37847"
   dependencies:
     argparse "^1.0.7"
     esprima "^4.0.0"
@@ -3928,6 +3928,11 @@ react-devtools-core@^3.4.2:
 react-is@^16.6.3, react-is@^16.8.1:
   version "16.8.3"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
+
+"react-native-get-sms-android@github:briankabiro/react-native-get-sms-android":
+  version "2.1.0"
+  uid b27bda379569a7d4930b68d13e20c4e0c5efbd73
+  resolved "https://codeload.github.com/briankabiro/react-native-get-sms-android/tar.gz/b27bda379569a7d4930b68d13e20c4e0c5efbd73"
 
 react-native@0.58.6:
   version "0.58.6"
