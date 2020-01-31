@@ -187,6 +187,11 @@ SmsAndroid.delete(
 );
 ```
 
+#### Important note on deleting messages
+For Android > 5, the only app permitted to **delete** an SMS message is the app installed as the default SMS handler.
+
+If your app is not set as the default SMS handler, it will not be able to delete. See this [thread](https://stackoverflow.com/questions/8614211/deleting-android-sms-programmatically) on Stack Overflow for more details.
+
 ### Send SMS Message (automatically)
 
 Send an sms directly with React without user interaction.
