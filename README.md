@@ -211,6 +211,26 @@ SmsAndroid.autoSend(
 );
 ```
 
+#### Send message to multiple numbers
+
+```javascript
+import SmsAndroid from 'react-native-get-sms-android';
+
+let phoneNumbers = ["123", "456"];
+
+SmsAndroid.autoSend(
+  JSON.stringify(phoneNumbers),
+  message,
+  (fail) => {
+    console.log('Failed with this error: ' + fail);
+  },
+  (success) => {
+    console.log('SMS sent successfully');
+  },
+);
+```
+
+
 #### Event listeners
 
 An event will be thrown when the sms has been delivered. If the sms was delivered successfully the message will be "SMS delivered" otherwise the message will be "SMS not delivered"
