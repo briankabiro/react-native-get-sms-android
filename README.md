@@ -216,7 +216,9 @@ SmsAndroid.autoSend(
 ```javascript
 import SmsAndroid from 'react-native-get-sms-android';
 
-let phoneNumbers = ["123", "456"];
+let phoneNumbers = {
+  "addressList": ["123", "456"]
+};
 
 SmsAndroid.autoSend(
   JSON.stringify(phoneNumbers),
