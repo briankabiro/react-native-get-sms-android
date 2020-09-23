@@ -90,7 +90,7 @@ var filter = {
   box: 'inbox', // 'inbox' (default), 'sent', 'draft', 'outbox', 'failed', 'queued', and '' for all
 
   /**
-   *  the next 3 filters can work together, they are AND-ed
+   *  the next 4 filters can work together, they are AND-ed
    *  
    *  minDate, maxDate filters work like this:
    *    - If and only if you set a maxDate, it's like executing this SQL query:
@@ -101,6 +101,7 @@ var filter = {
   maxDate: 1556277910456, // timestamp (in milliseconds since UNIX epoch)
   bodyRegex: '(.*)How are you(.*)', // content regex to match
   addressRegex: '^[0-9]{12}$', // address regex to match
+  
   /** the next 5 filters should NOT be used together, they are OR-ed so pick one **/
   read: 0, // 0 for unread SMS, 1 for SMS already read
   _id: 1234, // specify the msg id
