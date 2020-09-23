@@ -100,7 +100,7 @@ var filter = {
   minDate: 1554636310165, // timestamp (in milliseconds since UNIX epoch)
   maxDate: 1556277910456, // timestamp (in milliseconds since UNIX epoch)
   bodyRegex: '(.*)How are you(.*)', // content regex to match
-
+  addressRegex: '^[0-9]{12}$', // address regex to match
   /** the next 5 filters should NOT be used together, they are OR-ed so pick one **/
   read: 0, // 0 for unread SMS, 1 for SMS already read
   _id: 1234, // specify the msg id
