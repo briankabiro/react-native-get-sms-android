@@ -13,6 +13,7 @@ import com.facebook.react.bridge.ReadableMap;
 import com.facebook.react.bridge.WritableMap;
 
 import android.content.ContentValues;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Toast;
 import android.app.LoaderManager;
@@ -30,11 +31,13 @@ import android.content.BroadcastReceiver;
 import android.content.IntentFilter;
 
 import android.telephony.SmsManager;
-import android.telephony.SmsMessage;
+import android.telephony.SubscriptionInfo;
+import android.telephony.SubscriptionManager;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.ArrayList;
+import java.util.List;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -229,8 +232,8 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
 
 
     @ReactMethod
-    public void autoSend(String phoneNumber, String message, final Callback errorCallback,
-                         final Callback successCallback) {
+    public void autoSendMultiSim(Integer simSlot, String phoneNumber, String message,
+                                 final Callback errorCallback, final Callback successCallback) {
 
         cb_autoSend_succ = successCallback;
         cb_autoSend_err = errorCallback;
@@ -284,6 +287,19 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             }, new IntentFilter(DELIVERED));
 
             SmsManager sms = SmsManager.getDefault();
+
+            if (simSlot != null && simSlot < 2 && simSlot >= 0
+                && Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
+                SubscriptionManager localSubscriptionManager = SubscriptionManager.from(context);
+                if (localSubscriptionManager.getActiveSubscriptionInfoCount() > 1) {
+                    List localList = localSubscriptionManager.getActiveSubscriptionInfoList();
+
+                    SubscriptionInfo simInfo = (SubscriptionInfo) localList.get(simSlot);
+
+                    sms = SmsManager.getSmsManagerForSubscriptionId(simInfo.getSubscriptionId());
+                }
+            }
+
             ArrayList<String> parts = sms.divideMessage(message);
 
             for (int i = 0; i < parts.size(); i++) {
@@ -300,5 +316,11 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
         } catch (Exception e) {
             sendCallback(e.getMessage(), false);
         }
+    }
+
+    @ReactMethod
+    public void autoSend(String phoneNumber, String message, final Callback errorCallback,
+                         final Callback successCallback) {
+        autoSendMultiSim(null, phoneNumber, message, errorCallback, successCallback);
     }
 }
