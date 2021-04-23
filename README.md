@@ -198,7 +198,32 @@ Send an sms directly with React without user interaction.
 
 ```javascript
 import SmsAndroid from 'react-native-get-sms-android';
+import { PermissionsAndroid, Alert } from 'react-native';
 
+// Note that Google Play Store may NOT allow an application to send SMS messages directly (without user interaction.) 
+// https://support.google.com/googleplay/android-developer/answer/10208820 
+
+// Check if permission is granted (if you like) 
+async componentDidMount() {
+  try {
+    let granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.SEND_SMS, {
+        title: 'Send SMS',
+        message: 'Need access to send sms',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log('SEND_SMS permissions granted', granted);
+    } else {
+      Alert.alert('SEND_SMS permissions denied');
+      console.log('SEND_SMS permissions denied');
+    }
+  } catch (err) {
+    Alert.alert(err);
+  }
+};
+
+// actual code 
 SmsAndroid.autoSend(
   phoneNumber,
   message,
