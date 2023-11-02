@@ -168,7 +168,7 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             JSONArray addressList = jsonObject.getJSONArray("addressList");
             int n;
             if ((n = addressList.length()) > 0) {
-                PendingIntent sentIntent = PendingIntent.getBroadcast(mActivity, 0, new Intent("SENDING_SMS"), 0);
+                PendingIntent sentIntent = PendingIntent.getBroadcast(mActivity, 0, new Intent("SENDING_SMS"), PendingIntent.FLAG_IMMUTABLE);
                 SmsManager sms = SmsManager.getDefault();
                 for (int i = 0; i < n; i++) {
                     String address;
@@ -176,7 +176,7 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
                         sms.sendTextMessage(address, null, text, sentIntent, null);
                 }
             } else {
-                PendingIntent sentIntent = PendingIntent.getActivity(mActivity, 0, new Intent("android.intent.action.VIEW"), 0);
+                PendingIntent sentIntent = PendingIntent.getActivity(mActivity, 0, new Intent("android.intent.action.VIEW"), PendingIntent.FLAG_IMMUTABLE);
                 Intent intent = new Intent("android.intent.action.VIEW");
                 intent.putExtra("sms_body", text);
                 intent.setData(Uri.parse("sms:"));
@@ -241,8 +241,8 @@ public class SmsModule extends ReactContextBaseJavaModule /*implements LoaderMan
             ArrayList<PendingIntent> sentPendingIntents = new ArrayList<PendingIntent>();
             ArrayList<PendingIntent> deliveredPendingIntents = new ArrayList<PendingIntent>();
 
-            PendingIntent sentPI = PendingIntent.getBroadcast(context, 0, new Intent(SENT), 0);
-            PendingIntent deliveredPI = PendingIntent.getBroadcast(context, 0, new Intent(DELIVERED), 0);
+            PendingIntent sentPI = PendingIntent.getBroadcast(context, 0, new Intent(SENT), PendingIntent.FLAG_IMMUTABLE);
+            PendingIntent deliveredPI = PendingIntent.getBroadcast(context, 0, new Intent(DELIVERED), PendingIntent.FLAG_IMMUTABLE);
 
             //---when the SMS has been sent---
             context.registerReceiver(new BroadcastReceiver() {
